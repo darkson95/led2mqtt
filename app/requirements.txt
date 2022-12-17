@@ -1,0 +1,4 @@
+RPi.GPIO
+paho-mqtt
+python-dotenv
+gpiozero
