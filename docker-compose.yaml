@@ -1,0 +1,8 @@
+services:
+  led2mqtt:
+    build: .
+    container_name: led2mqtt
+    privileged: true
+    restart: always
+    env_file:
+      - ./app/.env
