@@ -36,4 +36,4 @@ docker compose up -d
 
 ## Notice
 
-If you don't want to run the container in privileged mode, have a look at this artcile: [Docker Access to Raspberry Pi GPIO Pins](https://stackoverflow.com/a/48234752/13391690)
+If you don't want to run the container in privileged mode, have a look at this article: [Docker Access to Raspberry Pi GPIO Pins](https://stackoverflow.com/a/48234752/13391690)
