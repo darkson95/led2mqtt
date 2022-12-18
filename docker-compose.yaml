@@ -1,9 +1,26 @@
 services:
   led2mqtt:
-    build: .
+    image: ghcr.io/darkson95/led2mqtt:latest
     container_name: led2mqtt
     devices:
       - /dev/gpiomem
     restart: always
-    env_file:
-      - ./app/.env
+    environment:
+      MQTT_HOST: 
+      MQTT_PORT: 
+      MQTT_USERNAME: 
+      MQTT_PASSWORD: 
+      MQTT_TOPIC: 
+      MQTT_DISCOVERY_TOPIC: 
+
+      HA_DEVICE_NAME: 
+      HA_DEVICE_MANUFACTURER: 
+      HA_DEVICE_MODEL: 
+      HA_DEVICE_UNIQUE_ID: 
+      HA_DEVICE_IDENTIFIER: 
+
+      LED_GPIO_RED: 
+      LED_GPIO_GREEN: 
+      LED_GPIO_BLUE: 
+
+      LOG_LEVEL: INFO
