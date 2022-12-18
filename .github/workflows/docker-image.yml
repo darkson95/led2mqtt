@@ -18,7 +18,7 @@ jobs:
     - name: Prepare
       id: prep
       run: |
-        DOCKER_IMAGE=${{ github.actor }}/${GITHUB_REPOSITORY#*/}
+        DOCKER_IMAGE=ghcr.io/${{ github.actor }}/${{ github.repository }}
         VERSION=latest
         SHORTREF=${GITHUB_SHA::8}
 
