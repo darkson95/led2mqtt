@@ -14,14 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build the hello-world Docker image
+    - name: Login to GitHub image registry
       run: |
         echo $CR_PAT | docker login ghcr.io -u darkson95 --password-stdin
       env:
         CR_PAT: ${{ secrets.CR_PAT }}
-        
+
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ghcr.io/darkson95/led2mqtt:latest
-      
+
     - name: Push the Docker image to ghcr.io
       run: docker push ghcr.io/darkson95/led2mqtt:latest
