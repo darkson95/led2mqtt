@@ -28,23 +28,28 @@ class LED():
 
     def update_rgb(self, power, brightness, red, green, blue):
         if(self.led is not None):
-            if red > 255 or red < 0 or green > 255 or green < 0 or blue > 255 or blue < 0:
-                logging.warn(f"Each RGB color component must be between 0 and 255")
+            if red is not None (red > 255 or red < 0):
+                logging.warn(f"Red color component must be between 0 and 255")
                 return
-
-            if brightness > 255 or brightness < 0:
+            if green is not None (green > 255 or green < 0):
+                logging.warn(f"Green color component must be between 0 and 255")
+                return
+            if blue is not None (blue > 255 or blue < 0):
+                logging.warn(f"Blue color component must be between 0 and 255")
+                return
+            if brightness is not None and (brightness > 255 or brightness < 0):
                 logging.warn(f"Brightness component must be between 0 and 255")
                 return
 
             self.power = power
 
-            if brightness != None:
+            if brightness is not None:
                 self.brightness = brightness
-            if red != None:
+            if red is not None:
                 self.red = red
-            if green != None:
+            if green is not None:
                 self.green = green
-            if blue != None:
+            if blue is not None:
                 self.blue = blue
 
             red = (self.red / 255) * (self.brightness / 255) if self.power else 0
