@@ -105,6 +105,7 @@ class LED():
                 "sw_version": f"LED2MQTT {self.configuration.getVersion()}"
             },
             "name": self.configuration.ha_device_name,
+            "icon": "mdi:led-strip-variant",
             "unique_id": self.configuration.ha_device_unique_id,
             "command_topic": f"{self.configuration.mqtt_topic}/set",
             "json_attributes_topic": self.configuration.mqtt_topic,

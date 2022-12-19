@@ -60,6 +60,6 @@ if __name__ == '__main__':
     if not isinstance(numeric_level, int):
         raise ValueError("Invalid log level: {log_level}")
     logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s')
-    
+
     led2mqtt = LED2MQTT()
     led2mqtt.run()

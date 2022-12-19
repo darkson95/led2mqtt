@@ -12,12 +12,12 @@ class Configuration():
         self.mqtt_password = self.getConfigEntry("MQTT_PASSWORD", "")
         self.mqtt_topic = self.getConfigEntry("MQTT_TOPIC", "led2mqtt")
         self.mqtt_discovery_topic = self.getConfigEntry("MQTT_DISCOVERY_TOPIC", "homeassistant")
-        
+
         self.ha_device_name = self.getConfigEntry("HA_DEVICE_NAME", "LED Strips")
         self.ha_device_manufacturer = self.getConfigEntry("HA_DEVICE_MANUFACTURER", "LED2MQTT")
         self.ha_device_model = self.getConfigEntry("HA_DEVICE_MODEL", "LED Strips")
         self.ha_device_unique_id = self.getConfigEntry("HA_DEVICE_UNIQUE_ID", "LED2MQTT_LEDSTRIPS")
-        
+
         self.led_gpio_red = self.getConfigEntry("LED_GPIO_RED", "23")
         self.led_gpio_green = self.getConfigEntry("LED_GPIO_GREEN", "24")
         self.led_gpio_blue = self.getConfigEntry("LED_GPIO_BLUE", "25")
