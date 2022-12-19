@@ -27,14 +27,17 @@ class MQTTClient():
             logging.debug(f"Set MQTT-Username to {self.configuration.mqtt_username}")
 
     def connect(self):
+        logging.debug(f"Try to connect to MQTT-Broker ({self.configuration.mqtt_host}:{self.configuration.mqtt_port})")
         self.client.connect(self.configuration.mqtt_host, int(self.configuration.mqtt_port))
 
     def publish(self, topic, message):
+        logging.debug(f"MQTT-Publish to {topic}: {message}")
         result = self.client.publish(topic, message, qos=0, retain=True)
         status = result[0]
         if status != 0:
             logging.error(f"Failed to send MQTT-message to topic {topic}")
 
     def subscribe(self, topic, on_message):
+        logging.debug(f"MQTT-Subscribe to {topic}")
         self.client.subscribe(topic)
         self.client.on_message = on_message
