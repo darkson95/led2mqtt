@@ -5,24 +5,25 @@ This application controls a classic dimmable RGB-LED-Strip via the GPIOs with PW
 ## Docker run
 
 ```bash
-docker run -d \
-  -env MQTT_HOST= \ # edit the environment variables with your configuration
-  -env MQTT_PORT= \ 
-  -env MQTT_WEBSOCKETS= \ 
-  -env MQTT_USERNAME= \ 
-  -env MQTT_PASSWORD= \ 
-  -env MQTT_TOPIC= \ 
-  -env MQTT_DISCOVERY_TOPIC= \ 
-  -env HA_DEVICE_NAME= \ 
-  -env HA_DEVICE_MANUFACTURER= \ 
-  -env HA_DEVICE_MODEL= \ 
-  -env HA_DEVICE_UNIQUE_ID= \ 
-  -env HA_DEVICE_IDENTIFIER= \ 
-  -env LED_GPIO_RED= \ 
-  -env LED_GPIO_GREEN= \ 
-  -env LED_GPIO_BLUE= \ 
-  -env LOG_LEVEL=INFO \ 
-  --device/dev/gpiomem \
+docker run \
+  -d \
+  -e "MQTT_HOST=" \ # edit the environment variables with your configuration
+  -e "MQTT_PORT=" \ 
+  -e "MQTT_WEBSOCKETS=" \ 
+  -e "MQTT_USERNAME=" \ 
+  -e "MQTT_PASSWORD=" \ 
+  -e "MQTT_TOPIC=" \ 
+  -e "MQTT_DISCOVERY_TOPIC=" \ 
+  -e "HA_DEVICE_NAME=" \ 
+  -e "HA_DEVICE_MANUFACTURER=" \ 
+  -e "HA_DEVICE_MODEL=" \ 
+  -e "HA_DEVICE_UNIQUE_ID=" \ 
+  -e "HA_DEVICE_IDENTIFIER=" \ 
+  -e "LED_GPIO_RED=" \ 
+  -e "LED_GPIO_GREEN=" \ 
+  -e "LED_GPIO_BLUE=" \ 
+  -e "LOG_LEVEL=INFO" \ 
+  --device /dev/gpiomem \
   --name led2mqtt \
   ghcr.io/darkson95/led2mqtt:latest
 ```

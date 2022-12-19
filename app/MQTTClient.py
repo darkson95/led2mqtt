@@ -10,7 +10,7 @@ class MQTTClient():
 
         def on_connect(client, userdata, flags, rc):
             if rc == 0:
-                logging.debug(f"Connected to MQTT-Broker ({self.configuration.mqtt_host}:{self.configuration.mqtt_port})")
+                logging.info(f"Connected to MQTT-Broker ({self.get_url()})")
                 client.publish(f"{self.configuration.mqtt_topic}/availability", payload="online", qos=0, retain=True)
             else:
                 logging.error(f"Could not connect to MQTT-Broker. Error-Code {rc}")
@@ -26,8 +26,12 @@ class MQTTClient():
             self.client.username_pw_set(self.configuration.mqtt_username, self.configuration.mqtt_password)
             logging.debug(f"Set MQTT-Username to {self.configuration.mqtt_username}")
 
+    def get_url(self):
+        protocol = "ws" if self.configuration.mqtt_websockets == "true" else "mqtt"
+        return f"{protocol}://{self.configuration.mqtt_host}:{self.configuration.mqtt_port}"
+
     def connect(self):
-        logging.debug(f"Try to connect to MQTT-Broker ({self.configuration.mqtt_host}:{self.configuration.mqtt_port})")
+        logging.debug(f"Try to connect to MQTT-Broker ({self.get_url()})")
         self.client.connect(self.configuration.mqtt_host, int(self.configuration.mqtt_port))
 
     def publish(self, topic, message):
