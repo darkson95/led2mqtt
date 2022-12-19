@@ -97,7 +97,7 @@ class LED():
                 "manufacturer": self.configuration.ha_device.manufacturer,
                 "model": self.configuration.ha_device.model,
                 "name": self.configuration.ha_device.name,
-                "sw_version": "LED2MQTT"
+                "sw_version": f"LED2MQTT {self.configuration.getVersion()}"
             },
             "name": self.configuration.ha_device.name,
             "unique_id": self.configuration.ha_device.unique_id,

@@ -24,3 +24,8 @@ class Configuration():
     def getConfigEntry(self, env, name, default):
         config = env.get(name)
         return config if config else default
+
+    def getVersion(self):
+        with open('VERSION') as f:
+            version = f.read()
+            return version
