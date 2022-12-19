@@ -8,6 +8,7 @@ This application controls a classic dimmable RGB-LED-Strip via the GPIOs with PW
 docker run -d \
   -env MQTT_HOST= \ # edit the environment variables with your configuration
   -env MQTT_PORT= \ 
+  -env MQTT_WEBSOCKETS= \ 
   -env MQTT_USERNAME= \ 
   -env MQTT_PASSWORD= \ 
   -env MQTT_TOPIC= \ 

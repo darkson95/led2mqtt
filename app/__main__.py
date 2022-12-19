@@ -4,18 +4,20 @@ import logging
 from os import path, environ as env
 from dotenv import load_dotenv
 
-from MQTTClient import MQTTClient
+from Configuration import Configuration
 from LED import LED
+from MQTTClient import MQTTClient
 
 class LED2MQTT():
     def __init__(self):
         basedir = path.abspath(path.dirname(__file__))
         load_dotenv(path.join(basedir, '.env'))
 
-        self.led = LED(env)
-        self.mqtt_client = MQTTClient(env)
+        self.configuration = Configuration(env)
+        self.led = LED(self.configuration)
+        self.mqtt_client = MQTTClient(self.configuration)
         
-        log_level = env.get("LOG_LEVEL")
+        log_level = self.configuration.log_level
         numeric_level = getattr(logging, log_level.upper(), None)
         if not isinstance(numeric_level, int):
             raise ValueError("Invalid log level: {log_level}")
@@ -24,17 +26,17 @@ class LED2MQTT():
 
     def run(self):
         self.mqtt_client.connect()
-        self.mqtt_client.subscribe(env.get("MQTT_TOPIC") + "/set", self.on_message)
+        self.mqtt_client.subscribe(f"{self.configuration.mqtt.topic}/set", self.on_message)
 
         discovery_topic = self.led.get_discovery_topic()
         discovery_message = self.led.get_discovery_message()
         self.mqtt_client.publish(discovery_topic, discovery_message)
         logging.info("Send Discovery-Message: %s", discovery_message)
 
-        self.led.init_rgb(env.get("LED_GPIO_RED"), env.get("LED_GPIO_GREEN"), env.get("LED_GPIO_BLUE"))
+        self.led.init_rgb(self.configuration.led_gpio.red, self.configuration.led_gpio.green, self.configuration.led_gpio.blue)
         
         state_message = self.led.get_state_message()
-        self.mqtt_client.publish(env.get("MQTT_TOPIC"), state_message)
+        self.mqtt_client.publish(self.configuration.mqtt.topic, state_message)
 
         self.mqtt_client.client.loop_forever()
 
@@ -53,7 +55,7 @@ class LED2MQTT():
             self.led.update_rgb(power, brightness, red, green, blue)
 
         state_message = self.led.get_state_message()
-        self.mqtt_client.publish(env.get("MQTT_TOPIC"), state_message)
+        self.mqtt_client.publish(self.configuration.mqtt.topic, state_message)
 
 
 if __name__ == '__main__':

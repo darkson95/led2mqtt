@@ -2,12 +2,13 @@
 import json
 import logging
 
+from Configuration import Configuration
 from gpiozero.pins.rpigpio import RPiGPIOFactory
 from gpiozero import RGBLED
 
 class LED():
-    def __init__(self, env):
-        self.env = env
+    def __init__(self, configuration: Configuration):
+        self.configuration = configuration
         self.pin_factory = RPiGPIOFactory()
         self.led = None
 
@@ -27,6 +28,14 @@ class LED():
 
     def update_rgb(self, power, brightness, red, green, blue):
         if(self.led is not None):
+            if red > 255 or red < 0 or green > 255 or green < 0 or blue > 255 or blue < 0:
+                logging.warn(f"Each RGB color component must be between 0 and 255")
+                return
+
+            if brightness > 255 or brightness < 0:
+                logging.warn(f"Brightness component must be between 0 and 255")
+                return
+
             self.power = power
 
             if brightness != None:
@@ -73,29 +82,29 @@ class LED():
         return json.dumps(message)
 
     def get_discovery_topic(self):
-        return self.env.get("MQTT_DISCOVERY_TOPIC") + "/light/" + self.env.get("HA_DEVICE_UNIQUE_ID") + "/light/config"
+        return f"{self.configuration.mqtt.topic}/light/{self.configuration.ha_device.unique_id}/light/config"
 
     def get_discovery_message(self):
         message = {
             "schema": "json",
             "availability": [
-                { "topic": self.env.get("MQTT_TOPIC") + "/availability" }
+                { "topic": f"{self.configuration.mqtt.topic}/availability" }
             ],
             "device": {
                 "identifiers": [
-                    self.env.get("HA_DEVICE_UNIQUE_ID")
+                    self.configuration.ha_device.unique_id
                 ],
-                "manufacturer": self.env.get("HA_DEVICE_MANUFACTURER"),
-                "model": self.env.get("HA_DEVICE_MODEL"),
-                "name": self.env.get("HA_DEVICE_NAME"),
+                "manufacturer": self.configuration.ha_device.manufacturer,
+                "model": self.configuration.ha_device.model,
+                "name": self.configuration.ha_device.name,
                 "sw_version": "LED2MQTT"
             },
-            "name": self.env.get("HA_DEVICE_NAME"),
-            "unique_id": self.env.get("HA_DEVICE_UNIQUE_ID"),
-            "command_topic": self.env.get("MQTT_TOPIC") + "/set",
-            "json_attributes_topic": self.env.get("MQTT_TOPIC"),
-            "state_topic": self.env.get("MQTT_TOPIC"),
-            "brightness_state_topic": self.env.get("MQTT_TOPIC"),
+            "name": self.configuration.ha_device.name,
+            "unique_id": self.configuration.ha_device.unique_id,
+            "command_topic": f"{self.configuration.mqtt.topic}/set",
+            "json_attributes_topic": self.configuration.mqtt.topic,
+            "state_topic": self.configuration.mqtt.topic,
+            "brightness_state_topic": self.configuration.mqtt.topic,
             "brightness_value_template ": "{{ value_json.brightness }}",
             "brightness": True,
             "color_mode": True,
