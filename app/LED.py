@@ -87,7 +87,7 @@ class LED():
         return json.dumps(message)
 
     def get_discovery_topic(self):
-        return f"{self.configuration.mqtt_topic}/light/{self.configuration.ha_device_unique_id}/light/config"
+        return f"{self.configuration.mqtt_discovery_topic}/light/{self.configuration.ha_device_unique_id}/light/config"
 
     def get_discovery_message(self):
         message = {
