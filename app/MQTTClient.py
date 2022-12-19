@@ -14,13 +14,17 @@ class MQTTClient():
                 client.publish(f"{self.configuration.mqtt_topic}/availability", payload="online", qos=0, retain=True)
             else:
                 logging.error(f"Could not connect to MQTT-Broker. Error-Code {rc}")
-        
+
+        def on_disconnect(client, userdata, rc):
+            logging.error(f"Disconnected from MQTT-Broker ({self.get_url()}). Error-Code {rc}")
+
         client_id = f'led2mqtt-{random.randint(0, 1000)}'
         transport = "websockets" if self.configuration.mqtt_websockets == "true" else "tcp"
 
-        self.client = mqtt_client.Client(client_id, transport=transport, reconnect_on_failure=True)
+        self.client = mqtt_client.Client(client_id, clean_session=False, transport=transport, reconnect_on_failure=True)
         self.client.will_set(f"{self.configuration.mqtt_topic}/availability", payload="offline", qos=0, retain=True)
         self.client.on_connect = on_connect
+        self.client.on_disconnect = on_disconnect
         
         if self.configuration.mqtt_username and self.configuration.mqtt_password:
             self.client.username_pw_set(self.configuration.mqtt_username, self.configuration.mqtt_password)
