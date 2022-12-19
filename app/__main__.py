@@ -1,7 +1,6 @@
 # coding=utf-8
 import json
 import logging
-from os import environ as env
 
 from Configuration import Configuration
 from LED import LED
@@ -9,7 +8,7 @@ from MQTTClient import MQTTClient
 
 class LED2MQTT():
     def __init__(self):
-        self.configuration = Configuration(env)
+        self.configuration = Configuration()
         self.led = LED(self.configuration)
         self.mqtt_client = MQTTClient(self.configuration)
         
@@ -21,6 +20,10 @@ class LED2MQTT():
         logging.basicConfig(level=numeric_level, format='%(asctime)s - %(levelname)s - %(message)s')
 
     def run(self):
+        logging.info(f"=-=-=-=-=-=-=-=-=-=-=-=-=")
+        logging.info(f"LED2MQTT - Version {self.configuration.getVersion()}")
+        logging.info(f"=-=-=-=-=-=-=-=-=-=-=-=-=")
+
         self.mqtt_client.connect()
         self.mqtt_client.subscribe(f"{self.configuration.mqtt_topic}/set", self.on_message)
 

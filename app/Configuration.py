@@ -1,7 +1,9 @@
 # coding=utf-8
+import logging
+from os import environ as env
 
 class Configuration():
-    def __init__(self, env):
+    def __init__(self):
         self.mqtt_host = self.getConfigEntry(env, "MQTT_PORT", "localhost")
         self.mqtt_port = self.getConfigEntry(env, "MQTT_PORT", "1883")
         self.mqtt_websockets = self.getConfigEntry(env, "MQTT_WEBSOCKETS", "true")
@@ -23,6 +25,8 @@ class Configuration():
 
     def getConfigEntry(self, env, name, default):
         config = env.get(name)
+        logging.debug(f"Got config-entry from env: {name} = {config} (default: {default})")
+
         return config if config else default
 
     def getVersion(self):
