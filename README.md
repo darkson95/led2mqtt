@@ -1,28 +1,28 @@
 # LED2MQTT
 
-This application controls a classic dimmable RGB-LED-Strip via the GPIOs with PWM and adds a light entity in Home Assistant via MQTT-Discovery.
+This application controls a classic dimmable RGB-LED-Strip via the GPIOs with Pulse-Width-Modulation and adds a light entity in Home Assistant via MQTT-Discovery.
 
 ## Docker run
 
 ```bash
+# edit the environment variables with your configuration
 docker run \
   -d \
-  -e "MQTT_HOST=" \ # edit the environment variables with your configuration
-  -e "MQTT_PORT=" \ 
-  -e "MQTT_WEBSOCKETS=" \ 
-  -e "MQTT_USERNAME=" \ 
-  -e "MQTT_PASSWORD=" \ 
-  -e "MQTT_TOPIC=" \ 
-  -e "MQTT_DISCOVERY_TOPIC=" \ 
-  -e "HA_DEVICE_NAME=" \ 
-  -e "HA_DEVICE_MANUFACTURER=" \ 
-  -e "HA_DEVICE_MODEL=" \ 
-  -e "HA_DEVICE_UNIQUE_ID=" \ 
-  -e "HA_DEVICE_IDENTIFIER=" \ 
-  -e "LED_GPIO_RED=" \ 
-  -e "LED_GPIO_GREEN=" \ 
-  -e "LED_GPIO_BLUE=" \ 
-  -e "LOG_LEVEL=INFO" \ 
+  -e "MQTT_HOST=" \ # default: localhost
+  -e "MQTT_PORT=" \ # default: 1883
+  -e "MQTT_WEBSOCKETS=" \ # default: false, options: true, false
+  -e "MQTT_USERNAME=" \ # default: empty
+  -e "MQTT_PASSWORD=" \ # default: empty
+  -e "MQTT_TOPIC=" \ # default: led2mqtt
+  -e "MQTT_DISCOVERY_TOPIC=" \ # default: homeassistant
+  -e "HA_DEVICE_NAME=" \ # default: LED Strips
+  -e "HA_DEVICE_MANUFACTURER=" \ # default: LED2MQTT
+  -e "HA_DEVICE_MODEL=" \ # default: LED Strips
+  -e "HA_DEVICE_UNIQUE_ID=" \ # default: LED2MQTT_LEDSTRIPS
+  -e "LED_GPIO_RED=" \ # default: 23
+  -e "LED_GPIO_GREEN=" \ # default: 24
+  -e "LED_GPIO_BLUE=" \ # default: 25
+  -e "LOG_LEVEL=" \ # default: INFO, options: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
   --device /dev/gpiomem \
   --name led2mqtt \
   ghcr.io/darkson95/led2mqtt:latest

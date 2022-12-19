@@ -6,22 +6,21 @@ services:
       - /dev/gpiomem
     restart: always
     environment:
-      MQTT_HOST: 
-      MQTT_PORT: 
-      MQTT_WEBSOCKETS: 
-      MQTT_USERNAME: 
-      MQTT_PASSWORD: 
-      MQTT_TOPIC: 
-      MQTT_DISCOVERY_TOPIC: 
+      MQTT_HOST: # default: localhost
+      MQTT_PORT: # default: 1883
+      MQTT_WEBSOCKETS: # default: false, options: true, false
+      MQTT_USERNAME: # default: empty
+      MQTT_PASSWORD: # default: empty
+      MQTT_TOPIC: # default: led2mqtt
+      MQTT_DISCOVERY_TOPIC: # default: homeassistant
 
-      HA_DEVICE_NAME: 
-      HA_DEVICE_MANUFACTURER: 
-      HA_DEVICE_MODEL: 
-      HA_DEVICE_UNIQUE_ID: 
-      HA_DEVICE_IDENTIFIER: 
+      HA_DEVICE_NAME: # default: LED Strips
+      HA_DEVICE_MANUFACTURER: # default: LED2MQTT
+      HA_DEVICE_MODEL: # default: LED Strips
+      HA_DEVICE_UNIQUE_ID: # default: LED2MQTT_LEDSTRIPS
 
-      LED_GPIO_RED: 
-      LED_GPIO_GREEN: 
-      LED_GPIO_BLUE: 
+      LED_GPIO_RED: # default: 23
+      LED_GPIO_GREEN: # default: 24
+      LED_GPIO_BLUE: # default: 25
 
-      LOG_LEVEL: INFO
+      LOG_LEVEL: # default: INFO, options: NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL
