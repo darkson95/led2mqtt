@@ -82,29 +82,29 @@ class LED():
         return json.dumps(message)
 
     def get_discovery_topic(self):
-        return f"{self.configuration.mqtt.topic}/light/{self.configuration.ha_device.unique_id}/light/config"
+        return f"{self.configuration.mqtt_topic}/light/{self.configuration.ha_device_unique_id}/light/config"
 
     def get_discovery_message(self):
         message = {
             "schema": "json",
             "availability": [
-                { "topic": f"{self.configuration.mqtt.topic}/availability" }
+                { "topic": f"{self.configuration.mqtt_topic}/availability" }
             ],
             "device": {
                 "identifiers": [
-                    self.configuration.ha_device.unique_id
+                    self.configuration.ha_device_unique_id
                 ],
-                "manufacturer": self.configuration.ha_device.manufacturer,
-                "model": self.configuration.ha_device.model,
-                "name": self.configuration.ha_device.name,
+                "manufacturer": self.configuration.ha_device_manufacturer,
+                "model": self.configuration.ha_device_model,
+                "name": self.configuration.ha_device_name,
                 "sw_version": f"LED2MQTT {self.configuration.getVersion()}"
             },
-            "name": self.configuration.ha_device.name,
-            "unique_id": self.configuration.ha_device.unique_id,
-            "command_topic": f"{self.configuration.mqtt.topic}/set",
-            "json_attributes_topic": self.configuration.mqtt.topic,
-            "state_topic": self.configuration.mqtt.topic,
-            "brightness_state_topic": self.configuration.mqtt.topic,
+            "name": self.configuration.ha_device_name,
+            "unique_id": self.configuration.ha_device_unique_id,
+            "command_topic": f"{self.configuration.mqtt_topic}/set",
+            "json_attributes_topic": self.configuration.mqtt_topic,
+            "state_topic": self.configuration.mqtt_topic,
+            "brightness_state_topic": self.configuration.mqtt_topic,
             "brightness_value_template ": "{{ value_json.brightness }}",
             "brightness": True,
             "color_mode": True,

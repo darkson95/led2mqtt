@@ -26,17 +26,17 @@ class LED2MQTT():
 
     def run(self):
         self.mqtt_client.connect()
-        self.mqtt_client.subscribe(f"{self.configuration.mqtt.topic}/set", self.on_message)
+        self.mqtt_client.subscribe(f"{self.configuration.mqtt_topic}/set", self.on_message)
 
         discovery_topic = self.led.get_discovery_topic()
         discovery_message = self.led.get_discovery_message()
         self.mqtt_client.publish(discovery_topic, discovery_message)
         logging.info("Send Discovery-Message: %s", discovery_message)
 
-        self.led.init_rgb(self.configuration.led_gpio.red, self.configuration.led_gpio.green, self.configuration.led_gpio.blue)
+        self.led.init_rgb(self.configuration.led_gpio_red, self.configuration.led_gpio_green, self.configuration.led_gpio_blue)
         
         state_message = self.led.get_state_message()
-        self.mqtt_client.publish(self.configuration.mqtt.topic, state_message)
+        self.mqtt_client.publish(self.configuration.mqtt_topic, state_message)
 
         self.mqtt_client.client.loop_forever()
 
@@ -55,7 +55,7 @@ class LED2MQTT():
             self.led.update_rgb(power, brightness, red, green, blue)
 
         state_message = self.led.get_state_message()
-        self.mqtt_client.publish(self.configuration.mqtt.topic, state_message)
+        self.mqtt_client.publish(self.configuration.mqtt_topic, state_message)
 
 
 if __name__ == '__main__':

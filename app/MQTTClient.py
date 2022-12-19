@@ -10,24 +10,24 @@ class MQTTClient():
 
         def on_connect(client, userdata, flags, rc):
             if rc == 0:
-                logging.debug(f"Connected to MQTT-Broker ({self.configuration.mqtt.host}:{self.configuration.mqtt.port})")
-                client.publish(f"{self.configuration.mqtt.topic}/availability", payload="online", qos=0, retain=True)
+                logging.debug(f"Connected to MQTT-Broker ({self.configuration.mqtt_host}:{self.configuration.mqtt_port})")
+                client.publish(f"{self.configuration.mqtt_topic}/availability", payload="online", qos=0, retain=True)
             else:
                 logging.error(f"Could not connect to MQTT-Broker. Error-Code {rc}")
         
         client_id = f'led2mqtt-{random.randint(0, 1000)}'
-        transport = "websockets" if self.configuration.mqtt.websockets == "true" else "tcp"
+        transport = "websockets" if self.configuration.mqtt_websockets == "true" else "tcp"
 
         self.client = mqtt_client.Client(client_id, transport=transport, reconnect_on_failure=True)
-        self.client.will_set(f"{self.configuration.mqtt.topic}/availability", payload="offline", qos=0, retain=True)
+        self.client.will_set(f"{self.configuration.mqtt_topic}/availability", payload="offline", qos=0, retain=True)
         self.client.on_connect = on_connect
         
-        if self.configuration.mqtt.username and self.configuration.mqtt.password:
-            self.client.username_pw_set(self.configuration.mqtt.username, self.configuration.mqtt.password)
-            logging.debug(f"Set MQTT-Username to {self.configuration.mqtt.username}")
+        if self.configuration.mqtt_username and self.configuration.mqtt_password:
+            self.client.username_pw_set(self.configuration.mqtt_username, self.configuration.mqtt_password)
+            logging.debug(f"Set MQTT-Username to {self.configuration.mqtt_username}")
 
     def connect(self):
-        self.client.connect(self.configuration.mqtt.host, int(self.configuration.mqtt.port))
+        self.client.connect(self.configuration.mqtt_host, int(self.configuration.mqtt_port))
 
     def publish(self, topic, message):
         result = self.client.publish(topic, message, qos=0, retain=True)
