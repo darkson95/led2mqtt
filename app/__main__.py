@@ -1,8 +1,7 @@
 # coding=utf-8
 import json
 import logging
-from os import path, environ as env
-from dotenv import load_dotenv
+from os import environ as env
 
 from Configuration import Configuration
 from LED import LED
@@ -10,9 +9,6 @@ from MQTTClient import MQTTClient
 
 class LED2MQTT():
     def __init__(self):
-        basedir = path.abspath(path.dirname(__file__))
-        load_dotenv(path.join(basedir, '.env'))
-
         self.configuration = Configuration(env)
         self.led = LED(self.configuration)
         self.mqtt_client = MQTTClient(self.configuration)
