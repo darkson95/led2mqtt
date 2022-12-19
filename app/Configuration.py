@@ -6,7 +6,7 @@ class Configuration():
     def __init__(self):
         self.mqtt_host = self.getConfigEntry("MQTT_PORT", "localhost")
         self.mqtt_port = self.getConfigEntry("MQTT_PORT", "1883")
-        self.mqtt_websockets = self.getConfigEntry("MQTT_WEBSOCKETS", "true")
+        self.mqtt_websockets = self.getConfigEntry("MQTT_WEBSOCKETS", "false")
         self.mqtt_username = self.getConfigEntry("MQTT_USERNAME", "")
         self.mqtt_password = self.getConfigEntry("MQTT_PASSWORD", "")
         self.mqtt_topic = self.getConfigEntry("MQTT_TOPIC", "led2mqtt")
